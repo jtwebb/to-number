@@ -1,0 +1,80 @@
+{
+  "name": "@jtwebb/to-number",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "npm run lint && npm run clean && npm run build:esm && npm run build:cjs && npm run build:bundles && npm run declarations",
+    "build:bundles": "BABEL_ENV=esmBundled rollup -c",
+    "build:cjs": "BABEL_ENV=cjs babel index.js --extensions '.js' --out-dir 'build/cjs' --source-maps",
+    "build:esm": "BABEL_ENV=esmUnbundled babel index.js --extensions '.js' --out-dir 'build/esm' --source-maps",
+    "clean": "rimraf build",
+    "declarations": "tsc -p tsconfig.json",
+    "lint": "eslint --fix index.js test/index.spec.js && prettier --write index.js test/index.spec.js",
+    "test": "ava test/index.spec.js"
+  },
+  "keywords": [],
+  "author": "John Webb",
+  "license": "MIT",
+  "homepage": "https://github.com/jtwebb/to-number",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jtwebb/to-number"
+  },
+  "files": [
+    "index.js",
+    "build"
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.4",
+    "@jtwebb/eslint-config": "^1.0.0",
+    "@jtwebb/prettier": "^1.0.0",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-node-resolve": "^13.0.4",
+    "ava": "^3.15.0",
+    "eslint": "^7.32.0",
+    "prettier": "^2.3.2",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.56.3",
+    "rollup-plugin-terser": "^7.0.2",
+    "typescript": "^4.4.2"
+  },
+  "babel": {
+    "plugins": [],
+    "env": {
+      "esmUnbundled": {},
+      "esmBundled": {
+        "presets": [
+          [
+            "@babel/env",
+            {
+              "targets": "> 0.25%, not dead"
+            }
+          ]
+        ]
+      },
+      "cjs": {
+        "presets": [
+          [
+            "@babel/env",
+            {
+              "modules": "commonjs"
+            }
+          ]
+        ]
+      }
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "@jtwebb"
+    ],
+    "parserOptions": {
+      "sourceType": "module"
+    }
+  },
+  "prettier": "@jtwebb/prettier"
+}
